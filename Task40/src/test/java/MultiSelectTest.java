@@ -1,37 +1,39 @@
+import forms.MultiSelectPage;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
+import utils.ResourcesProperties;
+import utils.WebDriverManager;
 
-import java.util.List;
+import java.util.HashSet;
 
 public class MultiSelectTest {
     private WebDriver driver;
 
     @BeforeEach
     public void setUp() {
-        driver = new ChromeDriver();
+        driver = WebDriverManager.getInstance();
         driver.manage().window().maximize();
     }
 
     @Test
-    public void multiSelectListDemoTest(){
-        driver.get("https://www.seleniumeasy.com/test/basic-select-dropdown-demo.html");
+    public void multiSelectListTest() {
+        MultiSelectPage multiSelectPage = new MultiSelectPage();
 
-        Select objSelect = new Select(driver.findElement(By.id("multi-select")));
+        HashSet<String> optionsValue = multiSelectPage.selectRandomOptions(Integer.parseInt(ResourcesProperties.getDataProperty("quantity")));
 
-        List<WebElement> elementCount = objSelect.getOptions();
-        System.out.println(elementCount.size());
+        multiSelectPage.clickGetAllSelected();
+
+        for (WebElement option : multiSelectPage.getAllSelected()) {
+            Assertions.assertTrue(optionsValue.contains(option.getAttribute("value")));
+        }
     }
 
     @AfterEach
     public void closeUp() {
         driver.quit();
     }
-
-
 }
