@@ -46,12 +46,12 @@ public class AlertsTest {
         alertUtil.sendKeys(ResourcesProperties.getDataProperty("message"));
         alertUtil.acceptAlert();
 
-        Assertions.assertEquals("You have entered '"+ ResourcesProperties.getDataProperty("message") +"' !", alertPage.getTextConfirmBox(alertPage.promptMessage));
+        Assertions.assertEquals("You have entered '" + ResourcesProperties.getDataProperty("message") + "' !", alertPage.getTextConfirmBox(alertPage.promptMessage));
     }
 
     @AfterEach
     public void closeUp() {
-        driver.close();
+        driver.quit();
         WebDriverManager.delDriver();
     }
 }
