@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import utils.ResourcesProperties;
 import utils.WebDriverManager;
 
-import java.util.HashSet;
+import java.util.Set;
 
 public class MultiSelectTest {
     private WebDriver driver;
@@ -23,12 +23,12 @@ public class MultiSelectTest {
     public void multiSelectListTest() {
         MultiSelectPage multiSelectPage = new MultiSelectPage();
 
-        HashSet<String> optionsValue = multiSelectPage.selectRandomOptions(Integer.parseInt(ResourcesProperties.getDataProperty("quantity")));
+        Set<String> expectedOptions = multiSelectPage.selectRandomOptions(Integer.parseInt(ResourcesProperties.getDataProperty("quantity")));
 
         multiSelectPage.clickGetAllSelected();
 
         for (WebElement option : multiSelectPage.getAllSelected()) {
-            Assertions.assertTrue(optionsValue.contains(option.getAttribute("value")));
+            Assertions.assertTrue(expectedOptions.contains(option.getAttribute("value")), "Wrong item was selected");
         }
     }
 

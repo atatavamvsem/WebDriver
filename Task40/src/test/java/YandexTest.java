@@ -30,7 +30,7 @@ public class YandexTest {
         wait = new WebDriverWait(driver, 30);
     }
 
-    private static Stream<User> usersProvider(){
+    private static Stream<User> usersProvider() {
         parser = new JsonParser();
         users = parser.readFromFile(new File("src/test/resources/users.json"));
         return Stream.of(users);
@@ -59,12 +59,10 @@ public class YandexTest {
         WebElement loginSecondButton = driver.findElement(By.xpath("//button[@id='passp:sign-in']"));
         loginSecondButton.click();
 
-        //Wait disabled for to avoid problems with to combine implicit and explicit waits
-        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         wait.pollingEvery(1, TimeUnit.SECONDS);
 
         Assertions.assertEquals(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(@class,'user-account_left-name')]/span[@class='user-account__name']"))).getText(),
-                user.getUserName(),"Login failed");
+                user.getUserName(), "Login failed");
     }
 
     @AfterEach

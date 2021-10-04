@@ -25,10 +25,10 @@ public class MultiSelectPage {
         HashSet<String> optionsValue = new HashSet<>();
 
         List<WebElement> elementCount = objSelect.getOptions();
-        Integer[] random = GenerateRandomUtil.getArrayWithRandomInt(elementCount.size(), quantity);
+        int[] random = GenerateRandomUtil.getArrayWithRandomInt(elementCount.size(), quantity);
 
         for (int i = random.length; i > 0; i--) {
-            optionsValue.add(driver.findElement(By.xpath("//select[@id='multi-select']/option[" + (random[i - 1] + 1) + "]")).getAttribute("value"));
+            optionsValue.add(driver.findElement(By.xpath(String.format("//select[@id='multi-select']/option[%d]", random[i - 1] + 1))).getAttribute("value"));
             objSelect.selectByIndex(random[i - 1]);
         }
 

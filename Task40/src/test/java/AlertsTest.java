@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
+import utils.GenerateRandomUtil;
 import utils.ResourcesProperties;
 import utils.WebDriverManager;
-
 
 public class AlertsTest {
     private WebDriver driver;
@@ -36,17 +36,18 @@ public class AlertsTest {
 
         alertUtil.dismissAlert();
 
-        Assertions.assertEquals("You pressed Cancel!", alertPage.getTextConfirmBox(alertPage.confirmMessage));
+        Assertions.assertEquals("You pressed Cancel!", alertPage.getTextConfirmBox(alertPage.confirmMessage), "The message is wrong");
     }
 
     @Test
     public void alertBoxSentTest() {
         alertPage.clickPromptBoxButton();
 
-        alertUtil.sendKeys(ResourcesProperties.getDataProperty("message"));
+        String inputMessage = GenerateRandomUtil.generateRandomString(Integer.parseInt(ResourcesProperties.getDataProperty("lengthMessage")));
+        alertUtil.sendKeys(inputMessage);
         alertUtil.acceptAlert();
 
-        Assertions.assertEquals("You have entered '" + ResourcesProperties.getDataProperty("message") + "' !", alertPage.getTextConfirmBox(alertPage.promptMessage));
+        Assertions.assertEquals("You have entered '" + inputMessage + "' !", alertPage.getTextConfirmBox(alertPage.promptMessage), "Messages don't match");
     }
 
     @AfterEach

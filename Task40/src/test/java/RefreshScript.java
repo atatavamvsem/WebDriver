@@ -14,6 +14,7 @@ public class RefreshScript {
     public static void main(String[] args) {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
+        wait = new WebDriverWait(driver, 30);
         driver.get("https://www.seleniumeasy.com/test/bootstrap-download-progress-demo.html");
 
         WebElement inputButton = driver.findElement(By.xpath("//button[@id='cricle-btn']"));
@@ -21,9 +22,7 @@ public class RefreshScript {
 
         WebElement percentDownloading = driver.findElement(By.xpath("//div[@class='percenttext']"));
 
-        wait = new WebDriverWait(driver, 30);
-        ExpectedCondition<Boolean> percentageDownloadingMoreThan = arg0 -> Integer.parseInt(percentDownloading.getText().replace("%", "")) >= PERCENTAGE;
-        wait.until(percentageDownloadingMoreThan);
+        wait.until(arg0 -> Integer.parseInt(percentDownloading.getText().replace("%", "")) >= PERCENTAGE);
 
         System.out.println(percentDownloading.getText());
 
